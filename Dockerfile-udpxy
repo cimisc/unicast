@@ -1,0 +1,19 @@
+FROM alpine:3.20 AS builder
+
+RUN apk add build-base cmake fakeroot libcap-setcap bsd-compat-headers
+
+COPY udpxy /opt/udpxy
+WORKDIR /opt/udpxy/chipmunk
+
+RUN make && make install
+
+RUN setcap cap_net_raw+ep /usr/local/bin/udpxy
+RUN setcap cap_net_raw+ep /usr/local/bin/udpxrec
+
+FROM alpine:3.20
+
+COPY --from=builder /usr/local/bin/udpxy /usr/bin/udpxy
+COPY --from=builder /usr/local/bin/udpxrec /usr/bin/udpxrec
+
+ENTRYPOINT ["/usr/bin/udpxy"]
+CMD ["-B", "1Mb", "-T", "-p", "4022"]

@@ -1,0 +1,6 @@
+[submodule "udpxy"]
+	path = udpxy
+	url = https://github.com/pcherenkov/udpxy.git
+[submodule "msd_lite"]
+	path = msd_lite
+	url = https://github.com/rozhuk-im/msd_lite.git
