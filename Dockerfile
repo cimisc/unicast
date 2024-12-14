@@ -1,4 +1,4 @@
-FROM alpine:3.20 AS builder
+FROM alpine:3.21 AS builder
 
 RUN apk add build-base cmake fakeroot libcap-setcap bsd-compat-headers
 
@@ -12,7 +12,7 @@ RUN mkdir build && \
 
 RUN setcap cap_net_raw+ep /usr/local/bin/msd_lite
 
-FROM alpine:3.20
+FROM alpine:3.21
 
 COPY --from=builder /usr/local/bin/msd_lite /usr/bin/msd_lite
 COPY --from=builder /usr/local/etc/msd_lite/msd_lite.conf.sample /etc/msd_lite/msd_lite.conf
