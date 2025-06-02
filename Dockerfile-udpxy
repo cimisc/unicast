@@ -1,4 +1,4 @@
-FROM alpine:3.21 AS builder
+FROM alpine:3.22 AS builder
 
 RUN apk add build-base cmake fakeroot libcap-setcap bsd-compat-headers
 
@@ -10,7 +10,7 @@ RUN make && make install
 RUN setcap cap_net_raw+ep /usr/local/bin/udpxy
 RUN setcap cap_net_raw+ep /usr/local/bin/udpxrec
 
-FROM alpine:3.21
+FROM alpine:3.22
 
 COPY --from=builder /usr/local/bin/udpxy /usr/bin/udpxy
 COPY --from=builder /usr/local/bin/udpxrec /usr/bin/udpxrec
